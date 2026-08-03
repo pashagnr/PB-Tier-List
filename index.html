@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PB Tier List</title>
+  <style>
+    :root{--bg:#080d14;--panel:#101925;--line:#26364e;--text:#eef4ff;--muted:#78879c}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;color:var(--text);font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at 18% 2%,rgba(145,67,255,.18),transparent 28%),radial-gradient(circle at 82% 8%,rgba(0,209,162,.08),transparent 26%),linear-gradient(180deg,#080d14,#0a1018 55%,#070b11)}
+    .wrap{width:min(1460px,calc(100% - 44px));margin:24px auto 60px}
+    .topbar{height:74px;border:1px solid #1c2a3f;border-radius:18px;background:rgba(13,20,31,.92);display:flex;align-items:center;justify-content:space-between;padding:0 22px;box-shadow:0 22px 60px rgba(0,0,0,.32);backdrop-filter:blur(10px)}
+    .logo{display:flex;align-items:center;gap:12px;font-size:29px;font-weight:1000;letter-spacing:-.8px;white-space:nowrap;color:#fff;text-shadow:0 0 22px rgba(183,123,255,.32)}
+    .logo-mark{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#ffe15c,#ff7f2a 45%,#764dff);color:#10131c;font-weight:1000;box-shadow:0 0 28px rgba(151,77,255,.35)}
+    .nav{display:flex;gap:28px;color:#bdcce3;font-weight:850;align-items:center}.nav a:hover,.nav span:hover{color:#fff}
+    .search{width:270px;height:43px;border-radius:22px;border:1px solid #243852;background:#0b1420;color:#dbe8fa;outline:0;padding:0 18px;font-size:15px}
+    .tabs{margin-top:46px;display:flex;gap:7px;align-items:end;overflow-x:auto}
+    .tab{min-width:124px;height:72px;border:1px solid #1f2d43;border-radius:20px 20px 0 0;background:rgba(12,20,31,.92);color:#728197;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:950;gap:4px;cursor:pointer;user-select:none;transition:.14s}
+    .tab:hover{background:#121d2c;color:#c8d6ea}.tab.active{color:#fff;background:#172338;box-shadow:inset 0 -3px 0 #e6eefc,0 -12px 36px rgba(126,70,255,.12);border-bottom-color:#e6eefc}
+    .tab .ico{width:30px;height:30px;display:grid;place-items:center}.tab .ico svg{width:28px;height:28px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.45))}
+    .board{border:1px solid #1f2c3f;border-radius:0 18px 18px 18px;background:rgba(13,21,32,.97);min-height:680px;padding:28px;box-shadow:0 24px 90px rgba(0,0,0,.38)}
+    .board-head{display:flex;justify-content:flex-end;align-items:center;gap:16px;margin-bottom:26px}.pill{background:#1d2b40;border:1px solid #2b405e;padding:10px 16px;border-radius:11px;font-weight:950;min-width:76px;min-height:40px}
+    .ranking-head{display:grid;grid-template-columns:170px 1fr 390px;color:#6d7c91;font-weight:950;padding:0 16px 12px;font-size:14px;text-transform:uppercase}
+    .rank-list{display:grid;gap:8px}.empty-state{border:1px dashed #31445f;border-radius:14px;background:#101925;color:#91a4bf;padding:32px;text-align:center;font-weight:850}
+    .ranking-row{display:grid;grid-template-columns:170px 1fr 390px;min-height:76px;align-items:center;border:1px solid #202e42;border-radius:14px;background:#131d2a;overflow:hidden;cursor:pointer;transition:.13s}
+    .ranking-row:hover{transform:translateY(-1px);background:#172337;border-color:#36506f}
+    .rank-badge{height:64px;margin-left:10px;clip-path:polygon(0 0,100% 0,82% 100%,0 100%);display:flex;align-items:center;gap:12px;padding-left:17px;font-size:32px;font-weight:1000;font-style:italic;text-shadow:0 2px 0 rgba(0,0,0,.54);background:linear-gradient(135deg,#f8c435,#734cff)}
+    .rank-badge img,.tier-player img{image-rendering:pixelated;border-radius:4px}.rank-badge img{width:46px;height:46px}.player-name{font-size:24px;font-weight:1000;letter-spacing:-.3px}.subtitle{color:#8eadd2;margin-top:6px;font-size:15px}
+    .tiers{display:flex;gap:10px;flex-wrap:wrap;padding-right:16px;align-items:center}
+    .tier-chip{position:relative;width:39px;height:39px;border-radius:50%;display:inline-grid;place-items:center;background:#0b1320;border:2px solid #293a52;box-shadow:0 0 0 1px rgba(255,255,255,.03)}
+    .tier-chip svg{width:23px;height:23px}.tier-chip::after{content:attr(data-tier);position:absolute;bottom:-14px;background:#2d3549;border-radius:8px;padding:1px 6px;font-size:12px;color:#f1d277;font-weight:1000}
+    .tier-chip.empty{opacity:.48;border-style:dashed}.tier-chip.empty::after{content:"-";color:#a0adc0}
+    .tier-chip[data-peak]::before{content:"Zirve Tier: " attr(data-peak) "\A Şu An: " attr(data-tier);white-space:pre;position:absolute;bottom:55px;left:50%;transform:translateX(-50%);background:#07101a;border:1px solid #354960;color:#f7fbff;padding:9px 11px;border-radius:10px;font-size:12px;width:max-content;opacity:0;pointer-events:none;transition:.12s;z-index:50}
+    .tier-chip:hover::before{opacity:1}.columns{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:start}.tier-column{border:1px solid #1f2e43;border-radius:14px;overflow:hidden;background:#101a27;min-height:560px}
+    .tier-title{height:58px;display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:1000;color:#e8f0ff;border-bottom:1px solid rgba(255,255,255,.05)}
+    .tier-title.t1{background:rgba(255,190,40,.25);color:#ffd66d}.tier-title.t2{background:rgba(185,193,205,.22);color:#dce4ee}.tier-title.t3{background:rgba(208,114,52,.22);color:#ffad73}.tier-title.t4,.tier-title.t5{background:rgba(86,128,176,.16);color:#c6ddff}
+    .tier-player{height:39px;display:flex;align-items:center;gap:9px;padding:0 10px;background:#203047;border-bottom:1px solid #101a25;font-weight:850;cursor:pointer}.tier-player:nth-child(odd){background:#243650}.tier-player img{width:28px;height:28px}
+    .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);align-items:center;justify-content:center;z-index:100;padding:22px}.modal-backdrop.open{display:flex}
+    .modal{width:min(560px,100%);background:#121b28;border:1px solid #26364d;border-radius:22px;padding:32px 42px 36px;position:relative;box-shadow:0 25px 90px rgba(0,0,0,.55);text-align:center}.close{position:absolute;right:28px;top:28px;width:50px;height:50px;border-radius:50%;border:0;background:#223044;color:#dce7f8;font-size:34px;cursor:pointer}
+    .avatar{width:94px;height:94px;border-radius:50%;background:#202f47;display:block;margin:24px auto 12px;image-rendering:pixelated}.modal h2{margin:0;font-size:31px;letter-spacing:-.4px}.rank-pill{display:inline-flex;margin-top:16px;align-items:center;gap:8px;background:#343d4d;color:#e7eefb;border-radius:22px;padding:9px 15px;font-weight:1000;font-size:18px}
+    .name-mc{display:inline-flex;margin-top:22px;align-items:center;gap:10px;background:#1e2d42;border-radius:14px;padding:11px 16px;color:#aec4e2;font-weight:800;text-decoration:none}.modal-section{text-align:left;margin-top:28px;color:#cbd9ee;font-size:25px;font-weight:500;text-transform:uppercase}
+    .position-box{margin-top:11px;height:52px;border:1px solid #32435b;border-radius:10px;background:#151f2d;display:flex;align-items:center;overflow:hidden}.pos-num{min-width:170px;height:100%;display:flex;align-items:center;padding-left:16px;font-size:38px;font-style:italic;font-weight:1000;clip-path:polygon(0 0,100% 0,85% 100%,0 100%);background:#26344a}.pos-text{font-size:24px;font-weight:1000;padding-left:14px}.pos-text span{color:#a5bad9;font-size:21px}
+    .modal-tiers{margin-top:12px;border:1px solid #31435b;border-radius:10px;background:#151f2d;padding:14px;display:flex;gap:13px;flex-wrap:wrap}
+    @media(max-width:1050px){.nav{display:none}.search{width:220px}.ranking-row,.ranking-head{grid-template-columns:130px 1fr}.ranking-head div:last-child,.ranking-row .tiers{grid-column:1/-1;padding:10px 16px 22px}.columns{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="logo"><span class="logo-mark">PB</span><span>Tier List</span></div>
+      <div class="nav"><span>⌂ Ana Sayfa</span><span onclick="setActive('overall')" style="cursor:pointer">🏆 Sıralama</span><a href="https://discord.gg/7S4mFvEUGN" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">🎮 Discord</a></div>
+      <input id="search" class="search" placeholder="Oyuncu ara..." />
+    </div>
+    <div id="tabs" class="tabs"></div>
+    <main class="board">
+      <div class="board-head"><div class="pill"></div></div>
+      <div id="overallView"><div class="ranking-head"><div>#</div><div>OYUNCU</div><div>TIERLER</div></div><div id="rankList" class="rank-list"></div></div>
+      <div id="kitView" style="display:none;"><div id="tierColumns" class="columns"></div></div>
+    </main>
+  </div>
+  <div id="modalBackdrop" class="modal-backdrop"><div class="modal"><button class="close" onclick="closeModal()">×</button><img id="modalAvatar" class="avatar" src="" alt="" /><h2 id="modalName"></h2><div id="modalRank" class="rank-pill"></div><a id="modalNameMC" class="name-mc" href="#" target="_blank" rel="noopener">▣ NameMC ↗</a><div class="modal-section">Pozisyon</div><div class="position-box"><div id="modalPosition" class="pos-num"></div><div id="modalOverall" class="pos-text"></div></div><div class="modal-section">Tierler</div><div id="modalTiers" class="modal-tiers"></div></div></div>
+  <script>
+    const TIER_POINTS={HT1:60,LT1:45,HT2:30,LT2:20,HT3:10,LT3:6,HT4:4,LT4:3,HT5:2,LT5:1};
+    const TIER_ORDER=['HT1','LT1','HT2','LT2','HT3','LT3','HT4','LT4','HT5','LT5'];
+    const icons={
+      overall:`<svg viewBox="0 0 24 24" fill="#ffbd26"><path d="M7 3h10v3h3v2c0 3-2 5-5 5-.5 1-1.2 1.7-2 2.1V18h4v2H7v-2h4v-2.9c-.8-.4-1.5-1.1-2-2.1-3 0-5-2-5-5V6h3V3zm0 5H6c0 1.6.8 2.6 2.1 3-.1-.7-.1-1.5-.1-2.3V8zm10 .7c0 .8 0 1.6-.1 2.3C18.2 10.6 19 9.6 19 8h-2v.7z"/></svg>`,
+      crystal:`<svg viewBox="0 0 24 24"><path fill="#fff" d="M12 2 21 7v10l-9 5-9-5V7z"/><path fill="#b86bff" d="M12 4.5 18.8 8.3v7.4L12 19.5l-6.8-3.8V8.3z"/><path fill="#f5d8ff" d="M12 6 17 8.8 12 12 7 8.8z"/><path fill="#7f3cff" d="M7 10.2 12 13.2v4.1l-5-2.8z"/><path fill="#cf88ff" d="M17 10.2 12 13.2v4.1l5-2.8z"/></svg>`,
+      nethpot:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#082e2b"/><path d="M6 14c4-7 8-8 12-9-2 5-5 10-12 13 2-1 5-3 7-6-2 .4-4 1-7 2z" fill="#0fe0bd"/><circle cx="12" cy="12" r="9" fill="none" stroke="#13695e" stroke-width="2"/></svg>`,
+      diapot:`<svg viewBox="0 0 24 24"><path fill="#f4f5fa" d="M9 2h6v3l2 2v4l2 3v6c0 1-1 2-2 2H7c-1 0-2-1-2-2v-6l2-3V7l2-2z"/><path fill="#ff5576" d="M7 14h10v6H7z"/><path fill="#d8dce8" d="M9 5h6v2H9z"/></svg>`,
+      sword:`<svg viewBox="0 0 24 24"><path fill="#77c9ff" d="M19 3 21 5 9 17 7 15z"/><path fill="#2f85c7" d="m8 14 2 2-3 3-2-2z"/><path fill="#cbd7e7" d="m5 15 4 4-2 2-4-4z"/></svg>`,
+      smp:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#042923"/><path fill="#00d1a2" d="M6 12c3-5 7-7 12-7-1 7-5 11-12 13 2-1 4-3 6-6z"/><path fill="none" stroke="#2ffff0" stroke-width="1.5" d="M5 18c5-1 9-5 13-12"/></svg>`,
+      mace:`<svg viewBox="0 0 24 24"><path fill="#6e7183" d="m15 3 6 6-3 3-2-2-8 8-2-2 8-8-2-2z"/><path fill="#45495a" d="m4 18 2-2 3 3-2 2z"/><path fill="#8b8ea2" d="m14 2 8 8-2 2-8-8z"/></svg>`
+    };
+    const kits=[{id:'overall',name:'Overall',icon:icons.overall},{id:'crystal',name:'Crystal',icon:icons.crystal},{id:'nethpot',name:'NethPot',icon:icons.nethpot},{id:'diapot',name:'DiaPot',icon:icons.diapot},{id:'sword',name:'Sword',icon:icons.sword},{id:'smp',name:'SMP',icon:icons.smp},{id:'mace',name:'Mace',icon:icons.mace}];
+    let players=[];let activeTab='overall';
+    function skinUrl(ign){return `https://mc-heads.net/avatar/${encodeURIComponent(ign)}/100`}
+    function nameMCUrl(ign){return `https://namemc.com/profile/${encodeURIComponent(ign)}`}
+    async function loadPlayers(){try{const r=await fetch('https://nwtierlist.onrender.com/api/players', { cache: 'no-store' });players=await r.json();}catch(e){players=[]}setActive(activeTab||'overall')}
+    function pointsFor(p){return Object.values(p.tiers||{}).reduce((s,i)=>s+(TIER_POINTS[i.current]||0),0)}
+    function tierNumber(t){return t?Number(t.replace(/\D/g,'')):99}
+    function rankTitle(points){if(points>=320)return'Combat Grandmaster';if(points>=220)return'Combat Master';if(points>=80)return'Expert';if(points>=20)return'Skilled';return''}
+    function rankLabel(points){const title=rankTitle(points);return title?title+' ('+points+' puan)':points+' puan'}
+    function premiumText(p){return p.premium?'Premium':'Premium değil'}
+    function kitIcon(id){return kits.find(k=>k.id===id)?.icon||''}
+    function tierChip(kit,t){if(!t)return`<span class="tier-chip empty">-</span>`;return`<span class="tier-chip" data-tier="${t.current}" data-peak="${t.peak||t.current}">${kitIcon(kit)}</span>`}
+    function renderTabs(active){document.getElementById('tabs').innerHTML=kits.map(k=>`<div class="tab ${k.id===active?'active':''}" onclick="setActive('${k.id}')"><div class="ico">${k.icon}</div><div>${k.name}</div></div>`).join('')}
+    function renderOverall(list=players){const sorted=[...list].sort((a,b)=>pointsFor(b)-pointsFor(a));document.getElementById('rankList').innerHTML=sorted.length?sorted.map((p,i)=>`<div class="ranking-row" onclick="openModal('${p.ign}')"><div class="rank-badge"><span>${i+1}.</span><img src="${p.skin||skinUrl(p.ign)}"></div><div><div class="player-name">${p.ign}</div><div class="subtitle">🏅 ${rankLabel(pointsFor(p))}</div></div><div class="tiers">${kits.filter(k=>k.id!=='overall').map(k=>tierChip(k.id,p.tiers?.[k.id])).join('')}</div></div>`).join(''):`<div class="empty-state">Henüz siteye yansıyan test sonucu yok. Discord'da /sonuc girince buraya düşecek.</div>`}
+    function renderKit(kitId){const byTier={1:[],2:[],3:[],4:[],5:[]};players.forEach(p=>{const t=p.tiers?.[kitId]?.current;if(t)byTier[tierNumber(t)].push(p)});Object.values(byTier).forEach(arr=>arr.sort((a,b)=>TIER_ORDER.indexOf(a.tiers[kitId].current)-TIER_ORDER.indexOf(b.tiers[kitId].current)));document.getElementById('tierColumns').innerHTML=[1,2,3,4,5].map(n=>`<div class="tier-column"><div class="tier-title t${n}">${n===1?'🏆 ':n===2?'🏅 ':n===3?'🥉 ':''}Tier ${n}</div>${byTier[n].map(p=>`<div class="tier-player" onclick="openModal('${p.ign}')"><img src="${p.skin||skinUrl(p.ign)}"><span>${p.ign}</span></div>`).join('')}</div>`).join('')}
+    function setActive(tab){activeTab=tab;renderTabs(tab);if(tab==='overall'){overallView.style.display='';kitView.style.display='none';renderOverall()}else{overallView.style.display='none';kitView.style.display='';renderKit(tab)}}
+    function openModal(ign){const sorted=[...players].sort((a,b)=>pointsFor(b)-pointsFor(a)),p=players.find(x=>x.ign.toLowerCase()===ign.toLowerCase());if(!p)return;const pts=pointsFor(p),pos=sorted.findIndex(x=>x.ign===p.ign)+1;modalAvatar.src=p.skin||skinUrl(p.ign);modalName.textContent=p.ign;modalRank.textContent=`◇ ${rankTitle(pts)}`;modalNameMC.href=nameMCUrl(p.ign);modalPosition.textContent=`${pos}.`;modalOverall.innerHTML=`🏆 OVERALL <span>(${pts} puan)</span>`;modalTiers.innerHTML=kits.filter(k=>k.id!=='overall').map(k=>tierChip(k.id,p.tiers?.[k.id])).join('');modalBackdrop.classList.add('open')}
+    function closeModal(){modalBackdrop.classList.remove('open')}
+    modalBackdrop.addEventListener('click',e=>{if(e.target.id==='modalBackdrop')closeModal()});
+    search.addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();if(!q)return renderOverall();renderOverall(players.filter(p=>p.ign.toLowerCase().includes(q)))});
+    search.addEventListener('keydown',e=>{if(e.key!=='Enter')return;const q=e.target.value.trim().toLowerCase();if(!q)return;const exact=players.find(p=>p.ign.toLowerCase()===q);if(exact)openModal(exact.ign)});
+    loadPlayers();setInterval(loadPlayers,15000);
+  </script>
+</body>
+</html>
