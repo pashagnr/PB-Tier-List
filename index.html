@@ -75,7 +75,7 @@
     let players=[];let activeTab='overall';
     function skinUrl(ign){return `https://mc-heads.net/avatar/${encodeURIComponent(ign)}/100`}
     function nameMCUrl(ign){return `https://namemc.com/profile/${encodeURIComponent(ign)}`}
-    async function loadPlayers(){try{const r=await fetch('https://SENIN-RENDER-LINKIN.onrender.com/api/players', { cache: 'no-store' });players=await r.json();}catch(e){players=[]}setActive(activeTab||'overall')}
+    async function loadPlayers(){try{const r=await fetch('https://nwtierlist.onrender.com/api/players', { cache: 'no-store' });players=await r.json();}catch(e){players=[]}setActive(activeTab||'overall')}
     function pointsFor(p){return Object.values(p.tiers||{}).reduce((s,i)=>s+(TIER_POINTS[i.current]||0),0)}
     function tierNumber(t){return t?Number(t.replace(/\D/g,'')):99}
     function rankTitle(points){if(points>=320)return'Combat Grandmaster';if(points>=220)return'Combat Master';if(points>=80)return'Expert';if(points>=20)return'Skilled';return''}
