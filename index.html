@@ -42,30 +42,155 @@
     .position-box{margin-top:11px;height:52px;border:1px solid #32435b;border-radius:10px;background:#151f2d;display:flex;align-items:center;overflow:hidden}.pos-num{min-width:170px;height:100%;display:flex;align-items:center;padding-left:16px;font-size:38px;font-style:italic;font-weight:1000;clip-path:polygon(0 0,100% 0,85% 100%,0 100%);background:#26344a}.pos-text{font-size:24px;font-weight:1000;padding-left:14px}.pos-text span{color:#a5bad9;font-size:21px}
     .modal-tiers{margin-top:12px;border:1px solid #31435b;border-radius:10px;background:#151f2d;padding:14px;display:flex;gap:13px;flex-wrap:wrap}
     @media(max-width:1050px){.nav{display:none}.search{width:220px}.ranking-row,.ranking-head{grid-template-columns:130px 1fr}.ranking-head div:last-child,.ranking-row .tiers{grid-column:1/-1;padding:10px 16px 22px}.columns{grid-template-columns:1fr}}
+  
+    .info-btn{height:42px;border:1px solid #314660;border-radius:12px;background:#1d2b40;color:#f4f8ff;font-weight:950;font-size:15px;padding:0 17px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 10px 26px rgba(0,0,0,.22)}
+    .info-btn:hover{background:#263752;border-color:#4b6689;transform:translateY(-1px)}
+    .info-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:120;align-items:center;justify-content:center;padding:22px}
+    .info-backdrop.open{display:flex}
+    .info-panel{width:min(430px,100%);background:#111a28;border:1px solid #304057;border-radius:18px;box-shadow:0 28px 100px rgba(0,0,0,.62);padding:14px}
+    .info-tabs{height:44px;background:#242e40;border-radius:10px;display:grid;grid-template-columns:1fr 1fr;padding:4px;gap:4px;margin-bottom:14px}
+    .info-tab{border:0;border-radius:8px;background:transparent;color:#9aa8bd;font-weight:950;font-size:15px;cursor:pointer}
+    .info-tab.active{background:#2f3b51;color:#fff;box-shadow:inset 0 0 0 1px #40516c}
+    .info-title{font-size:19px;font-weight:850;margin:4px 0 16px;color:#eef5ff}
+    .info-title u{font-weight:950}
+    .title-row{display:flex;align-items:flex-start;gap:10px;margin:12px 0}
+    .title-icon{width:18px;height:18px;flex:0 0 18px;margin-top:2px}
+    .title-name{font-weight:1000;font-size:17px;line-height:1.15}
+    .title-desc{color:#9aa8bd;font-size:14px;margin-top:3px}
+    .gold{color:#ffd83d}.diamond{color:#70e1ff}.orange{color:#ff9d4a}.purple{color:#c9a8ff}.blue{color:#aebcff}.green{color:#7dffbd}.gray{color:#9aa5b5}
+    .points-table{border:1px solid #2b3a50;border-radius:12px;overflow:hidden;background:#0e1724}
+    .points-line{display:grid;grid-template-columns:1fr 90px;gap:8px;align-items:center;padding:10px 13px;border-bottom:1px solid #233147}
+    .points-line:last-child{border-bottom:0}
+    .points-tier{font-weight:1000;color:#f4f7ff}
+    .points-value{font-weight:1000;color:#ffd83d;text-align:right}
+    .info-note{margin-top:12px;color:#8fa0ba;font-size:13px;line-height:1.45}
+
+  
+    .achievement-line{display:flex;align-items:center;gap:7px;color:#98b4d7;margin-top:6px;font-size:17px;font-weight:700}
+    .achievement-line .achievement-icon{width:18px;height:18px;display:inline-grid;place-items:center}
+    .achievement-line .achievement-points{color:#526d95;font-weight:700}
+    .rank-pill.title-pill{background:linear-gradient(90deg,rgba(255,216,61,.18),rgba(255,216,61,.07));border:1px solid rgba(255,216,61,.22);color:#ffd83d}
+    .rank-pill.title-pill.master{background:linear-gradient(90deg,rgba(112,225,255,.16),rgba(112,225,255,.06));border-color:rgba(112,225,255,.22);color:#70e1ff}
+    .rank-pill.title-pill.elite{background:linear-gradient(90deg,rgba(255,157,74,.16),rgba(255,157,74,.06));border-color:rgba(255,157,74,.22);color:#ff9d4a}
+    .rank-pill.title-pill.specialist{background:linear-gradient(90deg,rgba(201,168,255,.18),rgba(201,168,255,.06));border-color:rgba(201,168,255,.25);color:#c9a8ff}
+    .rank-pill.title-pill.cadet{background:linear-gradient(90deg,rgba(174,188,255,.16),rgba(174,188,255,.06));border-color:rgba(174,188,255,.22);color:#aebcff}
+    .rank-pill.title-pill.novice{background:linear-gradient(90deg,rgba(125,255,189,.14),rgba(125,255,189,.05));border-color:rgba(125,255,189,.20);color:#7dffbd}
+    .rank-pill.title-pill.rookie{background:#2d3544;border:1px solid #3a4658;color:#9aa5b5}
+
+  
+    .retired-box{margin:18px 0 10px;padding:14px 16px;border-radius:18px;background:linear-gradient(180deg,rgba(38,46,72,.95),rgba(23,29,47,.95));border:1px solid rgba(255,208,86,.18);box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}
+    .retired-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .retired-title{display:inline-flex;align-items:center;gap:10px;padding:9px 16px;border-radius:999px;background:linear-gradient(90deg,rgba(255,210,72,.16),rgba(255,152,60,.14));border:1px solid rgba(255,208,86,.28);font-weight:800;color:#ffd34d;font-size:18px;letter-spacing:.2px}
+    .retired-title .small{color:#ffffff;opacity:.95;font-weight:800}
+    .retired-sub{margin-top:8px;color:#9fb0d4;font-size:13px}
+    .tier-chip.retired{position:relative;box-shadow:0 0 0 1px rgba(255,208,86,.35),0 0 18px rgba(255,208,86,.08)}
+    .tier-chip.retired::after{content:'R';position:absolute;top:-7px;right:-7px;width:16px;height:16px;border-radius:999px;background:#f3bf2d;color:#171717;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;border:2px solid #111a2b}
+
+  
+    .tier-hint{margin-top:8px;text-align:right;color:#7183a0;font-size:11px;font-weight:700;opacity:.55}
+
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="topbar">
-      <div class="logo"><span class="logo-mark">PB</span><span>Tier List</span></div>
+      <div class="logo" onclick="goHome()" title="Ana sayfaya dön" style="cursor:pointer"><span class="logo-mark">PB</span><span>Tier List</span></div>
       <div class="nav"><span>⌂ Ana Sayfa</span><span onclick="setActive('overall')" style="cursor:pointer">🏆 Sıralama</span><a href="https://discord.gg/7S4mFvEUGN" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">🎮 Discord</a></div>
       <input id="search" class="search" placeholder="Oyuncu ara..." />
     </div>
     <div id="tabs" class="tabs"></div>
     <main class="board">
-      <div class="board-head"><div class="pill"></div></div>
+      <div class="board-head"><button class="info-btn" onclick="openInfoPanel()">ⓘ Bilgi</button></div>
       <div id="overallView"><div class="ranking-head"><div>#</div><div>OYUNCU</div><div>TIERLER</div></div><div id="rankList" class="rank-list"></div></div>
       <div id="kitView" style="display:none;"><div id="tierColumns" class="columns"></div></div>
     </main>
   </div>
-  <div id="modalBackdrop" class="modal-backdrop"><div class="modal"><button class="close" onclick="closeModal()">×</button><img id="modalAvatar" class="avatar" src="" alt="" /><h2 id="modalName"></h2><div id="modalRank" class="rank-pill"></div><a id="modalNameMC" class="name-mc" href="#" target="_blank" rel="noopener">▣ NameMC ↗</a><div class="modal-section">Pozisyon</div><div class="position-box"><div id="modalPosition" class="pos-num"></div><div id="modalOverall" class="pos-text"></div></div><div class="modal-section">Tierler</div><div id="modalTiers" class="modal-tiers"></div></div></div>
+
+  <div id="infoBackdrop" class="info-backdrop">
+    <div class="info-panel">
+      <div class="info-tabs">
+        <button id="infoTabTitles" class="info-tab active" onclick="showInfoTab('titles')">Ünvanlar</button>
+        <button id="infoTabPoints" class="info-tab" onclick="showInfoTab('points')">Puanlar</button>
+      </div>
+
+      <div id="infoTitles">
+        <div class="info-title">Başarı <u>Ünvanları</u> Nasıl Alınır?</div>
+
+        <div class="title-row">
+          <svg class="title-icon" viewBox="0 0 24 24"><path fill="#ffd83d" d="M12 2 15 7l6 .9-4.4 4.2 1 5.9L12 15.2 6.4 18l1-5.9L3 7.9 9 7z"/><path fill="#fff" d="M12 6.2 13.7 9l3.3.5-2.4 2.3.6 3.2-3.2-1.7L8.8 15l.6-3.2L7 9.5 10.3 9z"/></svg>
+          <div><div class="title-name gold">Efsane Savaşçı</div><div class="title-desc">200+ toplam puan ile alınır.</div></div>
+        </div>
+
+        <div class="title-row">
+          <svg class="title-icon" viewBox="0 0 24 24"><path fill="#70e1ff" d="M12 2 21 8l-9 14L3 8z"/><path fill="#fff" opacity=".85" d="M12 5 16 8l-4 7-4-7z"/></svg>
+          <div><div class="title-name diamond">Usta Savaşçı</div><div class="title-desc">150+ toplam puan ile alınır.</div></div>
+        </div>
+
+        <div class="title-row">
+          <svg class="title-icon" viewBox="0 0 24 24"><path fill="#ff9d4a" d="M12 2c3 3 6 6 6 10a6 6 0 1 1-12 0c0-2.8 1.6-5.4 3.2-7.2-.2 2.2.8 3.6 2.8 4.2z"/></svg>
+          <div><div class="title-name orange">Elit Savaşçı</div><div class="title-desc">100+ toplam puan ile alınır.</div></div>
+        </div>
+
+        <div class="title-row">
+          <svg class="title-icon" viewBox="0 0 24 24"><path fill="#c9a8ff" d="M12 3 21 12l-9 9-9-9z"/><path fill="#101925" d="M12 7 17 12l-5 5-5-5z"/></svg>
+          <div><div class="title-name purple">Uzman Savaşçı</div><div class="title-desc">60+ toplam puan ile alınır.</div></div>
+        </div>
+
+        <div class="title-row">
+          <svg class="title-icon" viewBox="0 0 24 24"><path fill="#aebcff" d="M12 2 20 6v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6z"/><circle cx="12" cy="11" r="3" fill="#101925"/></svg>
+          <div><div class="title-name blue">Savaşçı Adayı</div><div class="title-desc">25+ toplam puan ile alınır.</div></div>
+        </div>
+
+        <div class="title-row">
+          <svg class="title-icon" viewBox="0 0 24 24"><path fill="#7dffbd" d="M12 3 22 12 12 21 2 12z"/><path fill="#101925" d="M12 8 16 12 12 16 8 12z"/></svg>
+          <div><div class="title-name green">Yeni Savaşçı</div><div class="title-desc">10+ toplam puan ile alınır.</div></div>
+        </div>
+
+        <div class="title-row">
+          <svg class="title-icon" viewBox="0 0 24 24"><path fill="#9aa5b5" d="M12 3 21 12 12 21 3 12z"/><path fill="#101925" d="M12 7 17 12 12 17 7 12z"/></svg>
+          <div><div class="title-name gray">Çaylak</div><div class="title-desc">10 puandan az oyuncuların başlangıç ünvanıdır.</div></div>
+        </div>
+      </div>
+
+      <div id="infoPoints" style="display:none">
+        <div class="info-title">Tier <u>Puan Sistemi</u></div>
+        <div class="points-table">
+          <div class="points-line"><div class="points-tier">High Tier 1 / HT1</div><div class="points-value">60 puan</div></div>
+          <div class="points-line"><div class="points-tier">Low Tier 1 / LT1</div><div class="points-value">45 puan</div></div>
+          <div class="points-line"><div class="points-tier">High Tier 2 / HT2</div><div class="points-value">30 puan</div></div>
+          <div class="points-line"><div class="points-tier">Low Tier 2 / LT2</div><div class="points-value">20 puan</div></div>
+          <div class="points-line"><div class="points-tier">High Tier 3 / HT3</div><div class="points-value">10 puan</div></div>
+          <div class="points-line"><div class="points-tier">Low Tier 3 / LT3</div><div class="points-value">6 puan</div></div>
+          <div class="points-line"><div class="points-tier">High Tier 4 / HT4</div><div class="points-value">4 puan</div></div>
+          <div class="points-line"><div class="points-tier">Low Tier 4 / LT4</div><div class="points-value">3 puan</div></div>
+          <div class="points-line"><div class="points-tier">High Tier 5 / HT5</div><div class="points-value">2 puan</div></div>
+          <div class="points-line"><div class="points-tier">Low Tier 5 / LT5</div><div class="points-value">1 puan</div></div>
+        </div>
+        <div class="info-note">Toplam puan, oyuncunun bütün aktif kitlerdeki mevcut tier puanlarının toplamıdır.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalBackdrop" class="modal-backdrop"><div class="modal"><button class="close" onclick="closeModal()">×</button><img id="modalAvatar" class="avatar" src="" alt="" /><h2 id="modalName"></h2><div id="modalRank" class="rank-pill"></div><a id="modalNameMC" class="name-mc" href="#" target="_blank" rel="noopener">▣ NameMC ↗</a><div class="modal-section">Pozisyon</div><div class="position-box"><div id="modalPosition" class="pos-num"></div><div id="modalOverall" class="pos-text"></div></div><div id="modalRetiredWrap"></div><div class="modal-section">Tierler</div><div id="modalTiers" class="modal-tiers"></div><div class="tier-hint">İmleci tierlerin üzerine getirerek zirve tier bilgisini görebilirsin.</div></div></div>
   <script>
     const TIER_POINTS={HT1:60,LT1:45,HT2:30,LT2:20,HT3:10,LT3:6,HT4:4,LT4:3,HT5:2,LT5:1};
     const TIER_ORDER=['HT1','LT1','HT2','LT2','HT3','LT3','HT4','LT4','HT5','LT5'];
     const icons={
       overall:`<svg viewBox="0 0 24 24" fill="#ffbd26"><path d="M7 3h10v3h3v2c0 3-2 5-5 5-.5 1-1.2 1.7-2 2.1V18h4v2H7v-2h4v-2.9c-.8-.4-1.5-1.1-2-2.1-3 0-5-2-5-5V6h3V3zm0 5H6c0 1.6.8 2.6 2.1 3-.1-.7-.1-1.5-.1-2.3V8zm10 .7c0 .8 0 1.6-.1 2.3C18.2 10.6 19 9.6 19 8h-2v.7z"/></svg>`,
       crystal:`<svg viewBox="0 0 24 24"><path fill="#fff" d="M12 2 21 7v10l-9 5-9-5V7z"/><path fill="#b86bff" d="M12 4.5 18.8 8.3v7.4L12 19.5l-6.8-3.8V8.3z"/><path fill="#f5d8ff" d="M12 6 17 8.8 12 12 7 8.8z"/><path fill="#7f3cff" d="M7 10.2 12 13.2v4.1l-5-2.8z"/><path fill="#cf88ff" d="M17 10.2 12 13.2v4.1l5-2.8z"/></svg>`,
-      nethpot:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#082e2b"/><path d="M6 14c4-7 8-8 12-9-2 5-5 10-12 13 2-1 5-3 7-6-2 .4-4 1-7 2z" fill="#0fe0bd"/><circle cx="12" cy="12" r="9" fill="none" stroke="#13695e" stroke-width="2"/></svg>`,
+      nethpot:`<svg viewBox="0 0 24 24" aria-hidden="true">
+        <defs>
+          <linearGradient id="nethpotGradV5" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#caa7ff"/>
+            <stop offset="100%" stop-color="#8b5cf6"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#nethpotGradV5)" d="M8.2 7.1c.2-2.2 1.9-3.6 3.8-3.6 1.9 0 3.6 1.4 3.8 3.6h.4c1.1 0 2 .9 2 2v1.3c0 .7-.3 1.3-.8 1.7v2.1c0 2.3-1.8 4.1-4.1 4.1h-2.2c-2.3 0-4.1-1.8-4.1-4.1v-2.1c-.5-.4-.8-1-.8-1.7V9.1c0-1.1.9-2 2-2h.4z"/>
+        <path fill="#f3e8ff" opacity=".28" d="M10 7.1c.2-1.1 1-1.8 2-1.8s1.8.7 2 1.8z"/>
+        <rect x="7.1" y="11.2" width="3" height="4.8" rx="1.4" fill="url(#nethpotGradV5)"/>
+        <rect x="13.9" y="11.2" width="3" height="4.8" rx="1.4" fill="url(#nethpotGradV5)"/>
+        <rect x="10.3" y="12.3" width="3.4" height="2.5" rx="1" fill="#2f1840" opacity=".35"/>
+      </svg>`,
       diapot:`<svg viewBox="0 0 24 24"><path fill="#f4f5fa" d="M9 2h6v3l2 2v4l2 3v6c0 1-1 2-2 2H7c-1 0-2-1-2-2v-6l2-3V7l2-2z"/><path fill="#ff5576" d="M7 14h10v6H7z"/><path fill="#d8dce8" d="M9 5h6v2H9z"/></svg>`,
       sword:`<svg viewBox="0 0 24 24"><path fill="#77c9ff" d="M19 3 21 5 9 17 7 15z"/><path fill="#2f85c7" d="m8 14 2 2-3 3-2-2z"/><path fill="#cbd7e7" d="m5 15 4 4-2 2-4-4z"/></svg>`,
       smp:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#042923"/><path fill="#00d1a2" d="M6 12c3-5 7-7 12-7-1 7-5 11-12 13 2-1 4-3 6-6z"/><path fill="none" stroke="#2ffff0" stroke-width="1.5" d="M5 18c5-1 9-5 13-12"/></svg>`,
@@ -73,25 +198,86 @@
     };
     const kits=[{id:'overall',name:'Overall',icon:icons.overall},{id:'crystal',name:'Crystal',icon:icons.crystal},{id:'nethpot',name:'NethPot',icon:icons.nethpot},{id:'diapot',name:'DiaPot',icon:icons.diapot},{id:'sword',name:'Sword',icon:icons.sword},{id:'smp',name:'SMP',icon:icons.smp},{id:'mace',name:'Mace',icon:icons.mace}];
     let players=[];let activeTab='overall';
+    function goHome(){
+      activeTab='overall';
+      const searchInput=document.getElementById('search');
+      if(searchInput) searchInput.value='';
+      setActive('overall');
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    function openInfoPanel(){document.getElementById('infoBackdrop').classList.add('open')}
+    function closeInfoPanel(){document.getElementById('infoBackdrop').classList.remove('open')}
+    function showInfoTab(tab){
+      const titles=document.getElementById('infoTitles');
+      const points=document.getElementById('infoPoints');
+      const tabTitles=document.getElementById('infoTabTitles');
+      const tabPoints=document.getElementById('infoTabPoints');
+      if(tab==='titles'){
+        titles.style.display='';
+        points.style.display='none';
+        tabTitles.classList.add('active');
+        tabPoints.classList.remove('active');
+      }else{
+        titles.style.display='none';
+        points.style.display='';
+        tabTitles.classList.remove('active');
+        tabPoints.classList.add('active');
+      }
+    }
+
     function skinUrl(ign){return `https://mc-heads.net/avatar/${encodeURIComponent(ign)}/100`}
     function nameMCUrl(ign){return `https://namemc.com/profile/${encodeURIComponent(ign)}`}
-    async function loadPlayers(){try{const r=await fetch('https://nwtierlist.onrender.com/api/players', { cache: 'no-store' });players=await r.json();}catch(e){players=[]}setActive(activeTab||'overall')}
+    async function loadPlayers(){
+      try{
+        const r=await fetch('https://nwtierlist.onrender.com/api/players', { cache: 'no-store' });
+        players=await r.json();
+      }catch(e){
+        players=[];
+      }
+      setActive(activeTab||'overall');
+    }
     function pointsFor(p){return Object.values(p.tiers||{}).reduce((s,i)=>s+(TIER_POINTS[i.current]||0),0)}
     function tierNumber(t){return t?Number(t.replace(/\D/g,'')):99}
-    function rankTitle(points){if(points>=320)return'Combat Grandmaster';if(points>=220)return'Combat Master';if(points>=80)return'Expert';if(points>=20)return'Skilled';return''}
-    function rankLabel(points){const title=rankTitle(points);return title?title+' ('+points+' puan)':points+' puan'}
+    function getAchievement(points){
+      if(points>=200)return{name:'Efsane Savaşçı',cls:'grandmaster',color:'#ffd83d'};
+      if(points>=150)return{name:'Usta Savaşçı',cls:'master',color:'#70e1ff'};
+      if(points>=100)return{name:'Elit Savaşçı',cls:'elite',color:'#ff9d4a'};
+      if(points>=60)return{name:'Uzman Savaşçı',cls:'specialist',color:'#c9a8ff'};
+      if(points>=25)return{name:'Savaşçı Adayı',cls:'cadet',color:'#aebcff'};
+      if(points>=10)return{name:'Yeni Savaşçı',cls:'novice',color:'#7dffbd'};
+      return{name:'Çaylak',cls:'rookie',color:'#9aa5b5'};
+    }
+    function achievementIcon(points){
+      const a=getAchievement(points);
+      const color=a.color;
+      return `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="${color}" d="M12 2 16.5 7.5 22 12l-5.5 4.5L12 22l-4.5-5.5L2 12l5.5-4.5z"/><path fill="#101925" d="M12 6.5 15.5 12 12 17.5 8.5 12z"/><path fill="${color}" d="M12 9.2 13.8 12 12 14.8 10.2 12z"/></svg>`;
+    }
+    function rankTitle(points){return getAchievement(points).name}
+    function rankLabel(points){return rankTitle(points)+' ('+points+' puan)'}
+    function achievementLine(points){const a=getAchievement(points);return `<div class="achievement-line"><span class="achievement-icon">${achievementIcon(points)}</span><span>${a.name}</span> <span class="achievement-points">(${points} puan)</span></div>`}
     function premiumText(p){return p.premium?'Premium':'Premium değil'}
     function kitIcon(id){return kits.find(k=>k.id===id)?.icon||''}
-    function tierChip(kit,t){if(!t)return`<span class="tier-chip empty">-</span>`;return`<span class="tier-chip" data-tier="${t.current}" data-peak="${t.peak||t.current}">${kitIcon(kit)}</span>`}
+    function tierChip(kit,t){if(!t)return`<span class="tier-chip empty">-</span>`;return`<span class="tier-chip ${t.retired?'retired':''}" data-tier="${t.current}" data-peak="${t.peak||t.current}">${kitIcon(kit)}</span>`}
     function renderTabs(active){document.getElementById('tabs').innerHTML=kits.map(k=>`<div class="tab ${k.id===active?'active':''}" onclick="setActive('${k.id}')"><div class="ico">${k.icon}</div><div>${k.name}</div></div>`).join('')}
-    function renderOverall(list=players){const sorted=[...list].sort((a,b)=>pointsFor(b)-pointsFor(a));document.getElementById('rankList').innerHTML=sorted.length?sorted.map((p,i)=>`<div class="ranking-row" onclick="openModal('${p.ign}')"><div class="rank-badge"><span>${i+1}.</span><img src="${p.skin||skinUrl(p.ign)}"></div><div><div class="player-name">${p.ign}</div><div class="subtitle">🏅 ${rankLabel(pointsFor(p))}</div></div><div class="tiers">${kits.filter(k=>k.id!=='overall').map(k=>tierChip(k.id,p.tiers?.[k.id])).join('')}</div></div>`).join(''):`<div class="empty-state">Henüz siteye yansıyan test sonucu yok. Discord'da /sonuc girince buraya düşecek.</div>`}
+    function renderOverall(list=players){const sorted=[...list].sort((a,b)=>pointsFor(b)-pointsFor(a));document.getElementById('rankList').innerHTML=sorted.length?sorted.map((p,i)=>`<div class="ranking-row" onclick="openModal('${p.ign}')"><div class="rank-badge"><span>${i+1}.</span><img src="${p.skin||skinUrl(p.ign)}"></div><div><div class="player-name">${p.ign}</div>${achievementLine(pointsFor(p))}</div><div class="tiers">${kits.filter(k=>k.id!=='overall').map(k=>tierChip(k.id,p.tiers?.[k.id])).join('')}</div></div>`).join(''):`<div class="empty-state">Henüz siteye yansıyan test sonucu yok. Discord'da /sonuc girince buraya düşecek.</div>`}
     function renderKit(kitId){const byTier={1:[],2:[],3:[],4:[],5:[]};players.forEach(p=>{const t=p.tiers?.[kitId]?.current;if(t)byTier[tierNumber(t)].push(p)});Object.values(byTier).forEach(arr=>arr.sort((a,b)=>TIER_ORDER.indexOf(a.tiers[kitId].current)-TIER_ORDER.indexOf(b.tiers[kitId].current)));document.getElementById('tierColumns').innerHTML=[1,2,3,4,5].map(n=>`<div class="tier-column"><div class="tier-title t${n}">${n===1?'🏆 ':n===2?'🏅 ':n===3?'🥉 ':''}Tier ${n}</div>${byTier[n].map(p=>`<div class="tier-player" onclick="openModal('${p.ign}')"><img src="${p.skin||skinUrl(p.ign)}"><span>${p.ign}</span></div>`).join('')}</div>`).join('')}
     function setActive(tab){activeTab=tab;renderTabs(tab);if(tab==='overall'){overallView.style.display='';kitView.style.display='none';renderOverall()}else{overallView.style.display='none';kitView.style.display='';renderKit(tab)}}
-    function openModal(ign){const sorted=[...players].sort((a,b)=>pointsFor(b)-pointsFor(a)),p=players.find(x=>x.ign.toLowerCase()===ign.toLowerCase());if(!p)return;const pts=pointsFor(p),pos=sorted.findIndex(x=>x.ign===p.ign)+1;modalAvatar.src=p.skin||skinUrl(p.ign);modalName.textContent=p.ign;modalRank.textContent=`◇ ${rankTitle(pts)}`;modalNameMC.href=nameMCUrl(p.ign);modalPosition.textContent=`${pos}.`;modalOverall.innerHTML=`🏆 OVERALL <span>(${pts} puan)</span>`;modalTiers.innerHTML=kits.filter(k=>k.id!=='overall').map(k=>tierChip(k.id,p.tiers?.[k.id])).join('');modalBackdrop.classList.add('open')}
+    function openModal(ign){const sorted=[...players].sort((a,b)=>pointsFor(b)-pointsFor(a)),p=players.find(x=>x.ign.toLowerCase()===ign.toLowerCase());if(!p)return;const pts=pointsFor(p),pos=sorted.findIndex(x=>x.ign===p.ign)+1;modalAvatar.src=p.skin||skinUrl(p.ign);modalName.textContent=p.ign;const ach=getAchievement(pts);modalRank.className=`rank-pill title-pill ${ach.cls}`;modalRank.innerHTML=`${achievementIcon(pts)} ${ach.name}`;modalNameMC.href=nameMCUrl(p.ign);modalPosition.textContent=`${pos}.`;modalOverall.innerHTML=`🏆 OVERALL <span>(${pts} puan)</span>`;const retiredWrap=document.getElementById('modalRetiredWrap');if(retiredWrap){if(p.retired?.enabled){retiredWrap.innerHTML=`<div class="retired-box"><div class="retired-top"><div class="retired-title">✦ <span class="small">${p.retired.label||('Retired '+(p.retired.tier||''))}</span></div></div><div class="retired-sub">${p.retired.points||0} puan • Emekli oyuncu görünümü</div></div>`;}else{retiredWrap.innerHTML='';}}modalTiers.innerHTML=kits.filter(k=>k.id!=='overall').map(k=>tierChip(k.id,p.tiers?.[k.id])).join('');modalBackdrop.classList.add('open')}
     function closeModal(){modalBackdrop.classList.remove('open')}
+    infoBackdrop.addEventListener('click',e=>{if(e.target.id==='infoBackdrop')closeInfoPanel()});
     modalBackdrop.addEventListener('click',e=>{if(e.target.id==='modalBackdrop')closeModal()});
-    search.addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();if(!q)return renderOverall();renderOverall(players.filter(p=>p.ign.toLowerCase().includes(q)))});
-    search.addEventListener('keydown',e=>{if(e.key!=='Enter')return;const q=e.target.value.trim().toLowerCase();if(!q)return;const exact=players.find(p=>p.ign.toLowerCase()===q);if(exact)openModal(exact.ign)});
+    search.addEventListener('input',e=>{
+      // Arama yazarken liste filtrelenmez. Sıralama olduğu gibi kalır.
+      if(activeTab==='overall') renderOverall();
+    });
+    search.addEventListener('keydown',e=>{
+      if(e.key!=='Enter')return;
+      const q=e.target.value.trim().toLowerCase();
+      if(!q)return;
+      const exact=players.find(p=>p.ign.toLowerCase()===q);
+      if(exact)openModal(exact.ign);
+    });
     loadPlayers();setInterval(loadPlayers,15000);
   </script>
 </body>
