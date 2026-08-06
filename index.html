@@ -313,6 +313,8 @@
       const rows=[];
       players.forEach(p=>{
         const hist=Array.isArray(p.history)?p.history:[];
+
+        // 1) Yeni bot sürümü: /sonuc geçmişini buradan okur
         hist.forEach((h,idx)=>{
           const kit=h.kit||h.kitId||h.mode;
           const tier=h.tier||h.newTier||h.resultTier||h.current;
@@ -325,12 +327,33 @@
             at:h.created_at||h.createdAt||h.time||h.date||idx
           });
         });
+
+        // 2) Eski bot sürümü / history boşsa: aktif tierlerin updatedAt bilgisinden son test üretir
+        Object.entries(p.tiers||{}).forEach(([kit,item])=>{
+          if(!item||!item.current)return;
+          rows.push({
+            ign:p.ign,
+            skin:p.skin,
+            kit:String(kit).toLowerCase(),
+            tier:String(item.current).toUpperCase(),
+            at:item.updatedAt||p.updatedAt||p.createdAt||0
+          });
+        });
       });
-      if(rows.length){
-        rows.sort((a,b)=>String(b.at).localeCompare(String(a.at)));
-        return rows.slice(0,LATEST_RESULTS_LIMIT);
-      }
-      return [];
+
+      const seen=new Set();
+      const unique=[];
+      rows
+        .filter(r=>r.ign&&r.kit&&r.tier)
+        .sort((a,b)=>String(b.at).localeCompare(String(a.at)))
+        .forEach(r=>{
+          const key=`${String(r.ign).toLowerCase()}_${String(r.kit).toLowerCase()}_${r.tier}_${r.at}`;
+          if(seen.has(key))return;
+          seen.add(key);
+          unique.push(r);
+        });
+
+      return unique.slice(0,LATEST_RESULTS_LIMIT);
     }
 
     function renderLatestResults(){
