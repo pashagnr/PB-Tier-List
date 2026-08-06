@@ -293,6 +293,26 @@
     };
     let currentLang=localStorage.getItem('pb_lang')||'tr';
     function t(key){return (I18N[currentLang]&&I18N[currentLang][key])||I18N.tr[key]||key}
+
+    function fixBrokenI18nText(){
+      const map={
+        "${t('currentTier')}":t('currentTier'),
+        "${t('peakTier')}":t('peakTier'),
+        "${t('noTier')}":t('noTier'),
+        "${t('totalPoints')}":t('totalPoints'),
+        "${t('title')}":t('title'),
+        "${t('playerProfile')}":t('playerProfile')
+      };
+      const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+      const nodes=[];
+      while(walker.nextNode())nodes.push(walker.currentNode);
+      nodes.forEach(n=>{
+        let v=n.nodeValue;
+        Object.entries(map).forEach(([bad,good])=>{v=v.split(bad).join(good)});
+        n.nodeValue=v;
+      });
+    }
+
     function setLang(lang){
       currentLang=lang==='en'?'en':'tr';
       localStorage.setItem('pb_lang',currentLang);
@@ -302,6 +322,7 @@
       document.querySelectorAll('.lang-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.lang===currentLang));
       if(typeof renderLatestResults==='function')renderLatestResults();
       if(typeof render==='function')render();
+      setTimeout(fixBrokenI18nText,0);
     }
 
     const TIER_POINTS={HT1:60,LT1:45,HT2:30,LT2:20,HT3:10,LT3:6,HT4:4,LT4:3,HT5:2,LT5:1};
@@ -355,6 +376,7 @@
       }
       setActive(activeTab||'overall');
       renderLatestResults();
+      setTimeout(fixBrokenI18nText,0);
     }
     function pointsFor(p){return Object.values(p.tiers||{}).reduce((s,i)=>s+(TIER_POINTS[i.current]||0),0)}
     function tierNumber(t){return t?Number(t.replace(/\D/g,'')):99}
@@ -484,6 +506,7 @@
 
     loadPlayers();setInterval(loadPlayers,15000);
       setLang(currentLang);
+    setTimeout(fixBrokenI18nText,50);
   </script>
 </body>
 </html>
