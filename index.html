@@ -359,13 +359,14 @@
     function renderLatestResults(){
       const box=document.getElementById('latestResultsList');
       if(!box)return;
+      const latestResults=getLatestResults();
       if(!latestResults.length){
         box.innerHTML=`<div class="empty-state" style="grid-column:1/-1">Henüz son test sonucu yok. Discord'da /sonuc girilince buraya düşecek.</div>`;
         return;
       }
       box.innerHTML=latestResults.map(r=>{
-        const p=players.find(x=>x.ign.toLowerCase()===r.ign.toLowerCase())||{ign:r.ign,skin:skinUrl(r.ign)};
-        const kit=kits.find(k=>k.id===r.kit);
+        const p=players.find(x=>String(x.ign).toLowerCase()===String(r.ign).toLowerCase())||{ign:r.ign,skin:skinUrl(r.ign)};
+        const kit=kits.find(k=>k.id===String(r.kit).toLowerCase());
         return `<div class="latest-item" onclick="openModal('${p.ign}')">
           <img class="latest-avatar" src="${p.skin||skinUrl(p.ign)}" alt="">
           <div>
