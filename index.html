@@ -306,8 +306,16 @@
     function closeModal(){modalBackdrop.classList.remove('open')}
     infoBackdrop.addEventListener('click',e=>{if(e.target.id==='infoBackdrop')closeInfoPanel()});
     modalBackdrop.addEventListener('click',e=>{if(e.target.id==='modalBackdrop')closeModal()});
-    search.addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();if(!q)return renderOverall();renderOverall(players.filter(p=>p.ign.toLowerCase().includes(q)))});
-    search.addEventListener('keydown',e=>{if(e.key!=='Enter')return;const q=e.target.value.trim().toLowerCase();if(!q)return;const exact=players.find(p=>p.ign.toLowerCase()===q);if(exact)openModal(exact.ign)});
+    search.addEventListener('input',e=>{});
+    search.addEventListener('keydown',e=>{
+      if(e.key!=='Enter')return;
+      const q=e.target.value.trim().toLowerCase();
+      if(!q)return;
+      const exact=players.find(p=>p.ign.toLowerCase()===q);
+      const partial=players.find(p=>p.ign.toLowerCase().includes(q));
+      const target=exact||partial;
+      if(target)openModal(target.ign);
+    });
 
 
     function showRankingPage(){
