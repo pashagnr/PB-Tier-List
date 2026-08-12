@@ -237,6 +237,112 @@
       border:1px solid rgba(217,120,50,.28);
     }
 
+  
+    /* PB micro animations */
+    :root{
+      --pb-ease:cubic-bezier(.22,.78,.22,1);
+    }
+
+    .tab-btn,
+    .kit-tab,
+    .nav-tab,
+    .filter-btn,
+    .latest-tab,
+    button,
+    .name-mc,
+    .tier-chip,
+    .player-card,
+    .rank-row{
+      transition:
+        transform .18s var(--pb-ease),
+        opacity .18s ease,
+        background-color .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease,
+        color .18s ease,
+        filter .18s ease;
+    }
+
+    .tab-btn:hover,
+    .kit-tab:hover,
+    .nav-tab:hover,
+    .filter-btn:hover,
+    .latest-tab:hover,
+    button:hover,
+    .name-mc:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.08);
+    }
+
+    .tab-btn:active,
+    .kit-tab:active,
+    .nav-tab:active,
+    .filter-btn:active,
+    .latest-tab:active,
+    button:active{
+      transform:translateY(0) scale(.96);
+    }
+
+    .tier-chip:hover{
+      transform:translateY(-3px) scale(1.06);
+      box-shadow:0 8px 22px rgba(0,0,0,.28);
+      z-index:20;
+    }
+
+    .rank-row:hover,
+    .player-card:hover{
+      transform:translateX(3px);
+      background-color:rgba(38,54,77,.42);
+    }
+
+    @keyframes pbFadeUp{
+      from{opacity:0;transform:translateY(9px) scale(.985)}
+      to{opacity:1;transform:translateY(0) scale(1)}
+    }
+
+    @keyframes pbPop{
+      0%{transform:scale(.92);opacity:.35}
+      70%{transform:scale(1.035);opacity:1}
+      100%{transform:scale(1);opacity:1}
+    }
+
+    @keyframes pbGlow{
+      0%{box-shadow:0 0 0 rgba(155,89,255,0)}
+      50%{box-shadow:0 0 20px rgba(155,89,255,.22)}
+      100%{box-shadow:0 0 0 rgba(155,89,255,0)}
+    }
+
+    .pb-animate-in{
+      animation:pbFadeUp .28s var(--pb-ease) both;
+    }
+
+    .pb-pop{
+      animation:pbPop .24s var(--pb-ease) both;
+    }
+
+    .pb-glow{
+      animation:pbGlow .42s ease both;
+    }
+
+    /* active kit/nav feels selected rather than just changing instantly */
+    .active,
+    [aria-selected="true"]{
+      transition:
+        transform .18s var(--pb-ease),
+        background-color .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *,*::before,*::after{
+        animation-duration:.001ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.001ms!important;
+        scroll-behavior:auto!important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -673,6 +779,78 @@
         </div>`;
       }).join('');
     }
+
+
+    function pbAnimateContainer(selector){
+      const el=document.querySelector(selector);
+      if(!el)return;
+      el.classList.remove('pb-animate-in');
+      void el.offsetWidth;
+      el.classList.add('pb-animate-in');
+    }
+
+    function pbAnimateClicked(el){
+      if(!el)return;
+      el.classList.remove('pb-pop','pb-glow');
+      void el.offsetWidth;
+      el.classList.add('pb-pop','pb-glow');
+      setTimeout(()=>el.classList.remove('pb-pop','pb-glow'),500);
+    }
+
+    document.addEventListener('click',e=>{
+      const clickable=e.target.closest?.('button,.tab-btn,.kit-tab,.nav-tab,.filter-btn,.latest-tab,[data-kit],[data-tab]');
+      if(!clickable)return;
+
+      pbAnimateClicked(clickable);
+
+      // Kit değiştirilince ana liste hafifçe yeniden gelsin.
+      const txt=(clickable.textContent||'').toLowerCase();
+      const isKitClick =
+        clickable.dataset?.kit ||
+        /neth|dia|sword|smp|crystal|mace|overall|genel/.test(txt);
+
+      if(isKitClick){
+        setTimeout(()=>{
+          pbAnimateContainer('#rankList');
+          pbAnimateContainer('#kitView');
+          pbAnimateContainer('#overallView');
+        },25);
+      }
+
+      // Son Testler / latest results geçişi
+      if(/son test|latest test|recent test/.test(txt)){
+        setTimeout(()=>{
+          pbAnimateContainer('#latestResults');
+          pbAnimateContainer('#latestView');
+          pbAnimateContainer('#latestResultsList');
+        },25);
+      }
+    });
+
+    // Render sonrası yeni satırlar kademeli gelsin.
+    const pbObserver=new MutationObserver(mutations=>{
+      for(const m of mutations){
+        if(!m.addedNodes?.length)continue;
+        [...m.addedNodes].forEach((node,idx)=>{
+          if(!(node instanceof HTMLElement))return;
+          if(node.matches?.('.rank-row,.player-card,.tier-chip')){
+            node.style.animationDelay=Math.min(idx*18,120)+'ms';
+            node.classList.add('pb-animate-in');
+          }
+          node.querySelectorAll?.('.rank-row,.player-card,.tier-chip').forEach((child,i)=>{
+            child.style.animationDelay=Math.min(i*16,140)+'ms';
+            child.classList.add('pb-animate-in');
+          });
+        });
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded',()=>{
+      ['rankList','kitView','overallView','latestResults','latestView','latestResultsList']
+        .map(id=>document.getElementById(id))
+        .filter(Boolean)
+        .forEach(el=>pbObserver.observe(el,{childList:true,subtree:true}));
+    });
 
     loadPlayers();setInterval(loadPlayers,15000);
   </script>
