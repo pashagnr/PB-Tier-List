@@ -372,19 +372,63 @@
 
     .tier-player[data-tier]:hover{filter:brightness(1.08)}
 
+    /* Overall: PvP leaderboard tarzı sıra kartları */
+    #overallView .ranking-row{
+      background:#131d2a;
+      border:1px solid #202e42;
+    }
 
-    /* Overall sıralamada ilk 3 özel renk */
-    #overallView .ranking-row.overall-rank-1{
-      background:linear-gradient(90deg,rgba(242,209,91,.26),rgba(242,209,91,.10));
-      border-left:3px solid #f2d15b;
+    #overallView .rank-badge{
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(135deg,#20334a,#18283b);
+      border:1px solid rgba(255,255,255,.05);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);
     }
-    #overallView .ranking-row.overall-rank-2{
-      background:linear-gradient(90deg,rgba(188,196,210,.24),rgba(188,196,210,.09));
-      border-left:3px solid #c8ced8;
+
+    #overallView .rank-badge::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(115deg,rgba(255,255,255,.20),transparent 42%);
+      pointer-events:none;
+      opacity:.35;
     }
-    #overallView .ranking-row.overall-rank-3{
-      background:linear-gradient(90deg,rgba(184,115,51,.26),rgba(184,115,51,.10));
-      border-left:3px solid #b87333;
+
+    #overallView .rank-badge span,
+    #overallView .rank-badge img{
+      position:relative;
+      z-index:1;
+    }
+
+    #overallView .ranking-row.overall-rank-1 .rank-badge{
+      background:linear-gradient(135deg,#ffd84a 0%,#e6aa22 100%);
+      border-color:#f3c63c;
+      box-shadow:0 0 20px rgba(255,201,49,.15), inset 0 0 0 1px rgba(255,255,255,.18);
+    }
+
+    #overallView .ranking-row.overall-rank-2 .rank-badge{
+      background:linear-gradient(135deg,#dce5ea 0%,#93a4af 100%);
+      border-color:#bdc9d0;
+      box-shadow:0 0 18px rgba(196,209,217,.11), inset 0 0 0 1px rgba(255,255,255,.16);
+    }
+
+    #overallView .ranking-row.overall-rank-3 .rank-badge{
+      background:linear-gradient(135deg,#d98543 0%,#9b4e22 100%);
+      border-color:#b96a35;
+      box-shadow:0 0 18px rgba(190,101,48,.11), inset 0 0 0 1px rgba(255,255,255,.12);
+    }
+
+    #overallView .ranking-row.overall-rank-1 .rank-badge span,
+    #overallView .ranking-row.overall-rank-2 .rank-badge span,
+    #overallView .ranking-row.overall-rank-3 .rank-badge span{
+      color:#fff;
+      text-shadow:0 2px 3px rgba(0,0,0,.45);
+    }
+
+    #overallView .ranking-row:not(.overall-rank-1):not(.overall-rank-2):not(.overall-rank-3) .rank-badge{
+      background:linear-gradient(135deg,#22364d,#172638);
+      border-color:#293e57;
     }
 
 </style>
