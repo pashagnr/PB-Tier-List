@@ -353,7 +353,26 @@
       }
     }
 
-  </style>
+  
+    /* Kit sıralamasında HT koyu, LT daha açık görünür */
+    .tier-player[data-tier="HT1"]{background:rgba(168,134,24,.34);border-left:3px solid #d7b83f}
+    .tier-player[data-tier="LT1"]{background:rgba(242,209,91,.22);border-left:3px solid #f2d15b}
+
+    .tier-player[data-tier="HT2"]{background:rgba(150,44,44,.34);border-left:3px solid #c94848}
+    .tier-player[data-tier="LT2"]{background:rgba(239,90,90,.22);border-left:3px solid #ef5a5a}
+
+    .tier-player[data-tier="HT3"]{background:rgba(33,76,125,.42);border-left:3px solid #397fd0}
+    .tier-player[data-tier="LT3"]{background:rgba(82,152,232,.24);border-left:3px solid #5298e8}
+
+    .tier-player[data-tier="HT4"]{background:rgba(115,42,77,.38);border-left:3px solid #b54b82}
+    .tier-player[data-tier="LT4"]{background:rgba(211,90,148,.23);border-left:3px solid #d35a94}
+
+    .tier-player[data-tier="HT5"]{background:rgba(139,74,26,.38);border-left:3px solid #bd642b}
+    .tier-player[data-tier="LT5"]{background:rgba(217,120,50,.23);border-left:3px solid #d97832}
+
+    .tier-player[data-tier]:hover{filter:brightness(1.08)}
+
+</style>
 </head>
 <body>
   <div class="wrap">
@@ -689,7 +708,47 @@
     }
     function renderTabs(active){document.getElementById('tabs').innerHTML=kits.map(k=>`<div class="tab ${k.id===active?'active':''}" onclick="setActive('${k.id}')"><div class="ico">${k.icon}</div><div>${k.name}</div></div>`).join('')}
     function renderOverall(list=players){const sorted=[...list].sort((a,b)=>pointsFor(b)-pointsFor(a));document.getElementById('rankList').innerHTML=sorted.length?sorted.map((p,i)=>`<div class="ranking-row" onclick="openModal('${p.ign}')"><div class="rank-badge"><span>${i+1}.</span><img src="${p.skin||skinUrl(p.ign)}"></div><div><div class="player-name">${p.ign}</div>${achievementLine(pointsFor(p))}</div><div class="tiers">${orderedTierChips(p)}</div></div>`).join(''):`<div class="empty-state">Henüz siteye yansıyan test sonucu yok. Discord'da /sonuc girince buraya düşecek.</div>`}
-    function renderKit(kitId){const byTier={1:[],2:[],3:[],4:[],5:[]};players.forEach(p=>{const t=p.tiers?.[kitId]?.current;if(t)byTier[tierNumber(t)].push(p)});Object.values(byTier).forEach(arr=>arr.sort((a,b)=>TIER_ORDER.indexOf(a.tiers[kitId].current)-TIER_ORDER.indexOf(b.tiers[kitId].current)));document.getElementById('tierColumns').innerHTML=[1,2,3,4,5].map(n=>`<div class="tier-column"><div class="tier-title t${n}">${n===1?'🏆 ':n===2?'🏅 ':n===3?'🥉 ':''}Tier ${n}</div>${byTier[n].map(p=>`<div class="tier-player" onclick="openModal('${p.ign}')"><img src="${p.skin||skinUrl(p.ign)}"><span>${p.ign}</span></div>`).join('')}</div>`).join('')}
+    function renderKit(kitId){
+      const byTier={1:[],2:[],3:[],4:[],5:[]};
+
+      players.forEach(p=>{
+        const t=String(p.tiers?.[kitId]?.current||'').toUpperCase();
+        if(t) byTier[tierNumber(t)].push(p);
+      });
+
+      // Her Tier kutusunda HER ZAMAN High Tier üstte, Low Tier altta.
+      // Örn: Tier 3 => önce bütün HT3 oyuncuları, sonra bütün LT3 oyuncuları.
+      Object.entries(byTier).forEach(([tierNo,arr])=>{
+        arr.sort((a,b)=>{
+          const aTier=String(a.tiers?.[kitId]?.current||'').toUpperCase();
+          const bTier=String(b.tiers?.[kitId]?.current||'').toUpperCase();
+
+          const aHigh=aTier===`HT${tierNo}` ? 0 : 1;
+          const bHigh=bTier===`HT${tierNo}` ? 0 : 1;
+
+          if(aHigh!==bHigh) return aHigh-bHigh;
+
+          // Aynı HT/LT grubunda puanı yüksek oyuncu üstte.
+          const pointDiff=(totalPoints(b)||0)-(totalPoints(a)||0);
+          if(pointDiff!==0) return pointDiff;
+
+          return String(a.ign||'').localeCompare(String(b.ign||''));
+        });
+      });
+
+      document.getElementById('tierColumns').innerHTML=[1,2,3,4,5].map(n=>`
+        <div class="tier-column">
+          <div class="tier-title t${n}">${n===1?'🏆 ':n===2?'🏅 ':n===3?'🥉 ':''}Tier ${n}</div>
+          ${byTier[n].map(p=>{
+            const exactTier=String(p.tiers?.[kitId]?.current||'').toUpperCase();
+            return`<div class="tier-player" data-tier="${exactTier}" onclick="openModal('${p.ign}')">
+              <img src="${p.skin||skinUrl(p.ign)}">
+              <span>${p.ign}</span>
+            </div>`;
+          }).join('')}
+        </div>
+      `).join('');
+    }
     function setActive(tab){activeTab=tab;renderTabs(tab);if(tab==='overall'){overallView.style.display='';kitView.style.display='none';renderOverall()}else{overallView.style.display='none';kitView.style.display='';renderKit(tab)}}
     function openModal(ign){const sorted=[...players].sort((a,b)=>pointsFor(b)-pointsFor(a)),p=players.find(x=>x.ign.toLowerCase()===ign.toLowerCase());if(!p)return;const pts=pointsFor(p),pos=sorted.findIndex(x=>x.ign===p.ign)+1;modalAvatar.src=p.skin||skinUrl(p.ign);modalName.textContent=p.ign;const ach=getAchievement(pts);modalRank.className=`rank-pill title-pill ${ach.cls}`;modalRank.innerHTML=`${achievementIcon(pts)} ${ach.name}`;modalNameMC.href=nameMCUrl(p.ign);modalPosition.textContent=`${pos}.`;modalOverall.innerHTML=`🏆 OVERALL <span>(${pts} puan)</span>`;modalTiers.innerHTML=orderedTierChips(p);modalBackdrop.classList.add('open')}
     function closeModal(){modalBackdrop.classList.remove('open')}
