@@ -372,6 +372,21 @@
 
     .tier-player[data-tier]:hover{filter:brightness(1.08)}
 
+
+    /* Overall sıralamada ilk 3 özel renk */
+    #overallView .ranking-row.overall-rank-1{
+      background:linear-gradient(90deg,rgba(242,209,91,.26),rgba(242,209,91,.10));
+      border-left:3px solid #f2d15b;
+    }
+    #overallView .ranking-row.overall-rank-2{
+      background:linear-gradient(90deg,rgba(188,196,210,.24),rgba(188,196,210,.09));
+      border-left:3px solid #c8ced8;
+    }
+    #overallView .ranking-row.overall-rank-3{
+      background:linear-gradient(90deg,rgba(184,115,51,.26),rgba(184,115,51,.10));
+      border-left:3px solid #b87333;
+    }
+
 </style>
 </head>
 <body>
@@ -707,7 +722,7 @@
       return orderedKitIds(p).map(kitId=>tierChip(kitId,p?.tiers?.[kitId])).join('');
     }
     function renderTabs(active){document.getElementById('tabs').innerHTML=kits.map(k=>`<div class="tab ${k.id===active?'active':''}" onclick="setActive('${k.id}')"><div class="ico">${k.icon}</div><div>${k.name}</div></div>`).join('')}
-    function renderOverall(list=players){const sorted=[...list].sort((a,b)=>pointsFor(b)-pointsFor(a));document.getElementById('rankList').innerHTML=sorted.length?sorted.map((p,i)=>`<div class="ranking-row" onclick="openModal('${p.ign}')"><div class="rank-badge"><span>${i+1}.</span><img src="${p.skin||skinUrl(p.ign)}"></div><div><div class="player-name">${p.ign}</div>${achievementLine(pointsFor(p))}</div><div class="tiers">${orderedTierChips(p)}</div></div>`).join(''):`<div class="empty-state">Henüz siteye yansıyan test sonucu yok. Discord'da /sonuc girince buraya düşecek.</div>`}
+    function renderOverall(list=players){const sorted=[...list].sort((a,b)=>pointsFor(b)-pointsFor(a));document.getElementById('rankList').innerHTML=sorted.length?sorted.map((p,i)=>{const rankClass=i<3?` overall-rank-${i+1}`:'';return`<div class="ranking-row${rankClass}" onclick="openModal('${p.ign}')"><div class="rank-badge"><span>${i+1}.</span><img src="${p.skin||skinUrl(p.ign)}"></div><div><div class="player-name">${p.ign}</div>${achievementLine(pointsFor(p))}</div><div class="tiers">${orderedTierChips(p)}</div></div>`}).join(''):`<div class="empty-state">Henüz siteye yansıyan test sonucu yok. Discord'da /sonuc girince buraya düşecek.</div>`}
     function renderKit(kitId){
       const byTier={1:[],2:[],3:[],4:[],5:[]};
 
