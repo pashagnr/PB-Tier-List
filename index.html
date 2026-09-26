@@ -426,9 +426,11 @@
       text-shadow:0 2px 3px rgba(0,0,0,.45);
     }
 
+    /* 4. sıra ve sonrası eski renkli/pembemsi rank kutusuna geri döner */
     #overallView .ranking-row:not(.overall-rank-1):not(.overall-rank-2):not(.overall-rank-3) .rank-badge{
-      background:linear-gradient(135deg,#22364d,#172638);
-      border-color:#293e57;
+      background:linear-gradient(135deg,#f8c435 0%,#d34fff 48%,#734cff 100%);
+      border-color:rgba(204,91,255,.48);
+      box-shadow:0 0 18px rgba(190,72,255,.10), inset 0 0 0 1px rgba(255,255,255,.08);
     }
 
 
