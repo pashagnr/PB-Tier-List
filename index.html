@@ -431,6 +431,48 @@
       border-color:#293e57;
     }
 
+
+    /* Overall sıralamada tier çemberlerinin SADECE çerçevesi tier rengini alır */
+    #overallView .tier-chip[data-tier="HT1"],
+    #overallView .tier-chip[data-tier="RHT1"]{border-color:#b99a26}
+    #overallView .tier-chip[data-tier="LT1"],
+    #overallView .tier-chip[data-tier="RLT1"]{border-color:#f2d15b}
+
+    #overallView .tier-chip[data-tier="HT2"],
+    #overallView .tier-chip[data-tier="RHT2"]{border-color:#b53d3d}
+    #overallView .tier-chip[data-tier="LT2"],
+    #overallView .tier-chip[data-tier="RLT2"]{border-color:#ef5a5a}
+
+    /* HT3 belirgin şekilde daha koyu */
+    #overallView .tier-chip[data-tier="HT3"],
+    #overallView .tier-chip[data-tier="RHT3"]{border-color:#244f86}
+    #overallView .tier-chip[data-tier="LT3"],
+    #overallView .tier-chip[data-tier="RLT3"]{border-color:#5298e8}
+
+    #overallView .tier-chip[data-tier="HT4"],
+    #overallView .tier-chip[data-tier="RHT4"]{border-color:#9b3f6f}
+    #overallView .tier-chip[data-tier="LT4"],
+    #overallView .tier-chip[data-tier="RLT4"]{border-color:#d35a94}
+
+    #overallView .tier-chip[data-tier="HT5"],
+    #overallView .tier-chip[data-tier="RHT5"]{border-color:#a65725}
+    #overallView .tier-chip[data-tier="LT5"],
+    #overallView .tier-chip[data-tier="RLT5"]{border-color:#d97832}
+
+    /* İç kısmı aynı kalır; renk sadece border'dadır */
+    #overallView .tier-chip[data-tier]{
+      background:#0b1320;
+      box-shadow:0 0 0 1px rgba(255,255,255,.03);
+    }
+
+    /* HT3 alt etiketi de LT3'ten daha koyu olsun */
+    #overallView .tier-chip[data-tier="HT3"]::after,
+    #overallView .tier-chip[data-tier="RHT3"]::after{
+      color:#2f6fb8;
+      background:#142238;
+      border-color:rgba(47,111,184,.42);
+    }
+
 </style>
 </head>
 <body>
