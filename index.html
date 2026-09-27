@@ -56,11 +56,14 @@
     .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);align-items:center;justify-content:center;z-index:100;padding:22px}.modal-backdrop.open{display:flex}
     .modal{width:min(560px,100%);background:#121b28;border:1px solid #26364d;border-radius:22px;padding:32px 42px 36px;position:relative;box-shadow:0 25px 90px rgba(0,0,0,.55);text-align:center}.close{position:absolute;right:28px;top:28px;width:50px;height:50px;border-radius:50%;border:0;background:#223044;color:#dce7f8;font-size:34px;cursor:pointer}
     .avatar{width:94px;height:94px;border-radius:50%;background:#202f47;display:block;margin:24px auto 12px;image-rendering:pixelated}.modal h2{margin:0;font-size:31px;letter-spacing:-.4px}.rank-pill{display:inline-flex;margin-top:16px;align-items:center;gap:8px;background:#343d4d;color:#e7eefb;border-radius:22px;padding:9px 15px;font-weight:1000;font-size:18px}
+    .account-badge{display:inline-flex;align-items:center;justify-content:center;margin-top:10px;padding:6px 12px;border-radius:999px;font-size:11px;font-weight:1000;letter-spacing:.9px;text-transform:uppercase;border:1px solid transparent}
+    .account-badge.premium{color:#f7d77a;background:#2b2414;border-color:#665327}
+    .account-badge.cracked{color:#b9c7d9;background:#182433;border-color:#33465e}
     .name-mc{display:inline-flex;margin-top:22px;align-items:center;gap:10px;background:#1e2d42;border-radius:14px;padding:11px 16px;color:#aec4e2;font-weight:800;text-decoration:none}.modal-section{text-align:left;margin-top:28px;color:#cbd9ee;font-size:25px;font-weight:500;text-transform:uppercase}
     .position-box{margin-top:11px;height:52px;border:1px solid #32435b;border-radius:10px;background:#151f2d;display:flex;align-items:center;overflow:hidden}.pos-num{min-width:170px;height:100%;display:flex;align-items:center;padding-left:16px;font-size:38px;font-style:italic;font-weight:1000;clip-path:polygon(0 0,100% 0,85% 100%,0 100%);background:#26344a}.pos-text{font-size:24px;font-weight:1000;padding-left:14px}.pos-text span{color:#a5bad9;font-size:21px}
     .modal-tiers{margin-top:12px;border:1px solid #31435b;border-radius:10px;background:#151f2d;padding:14px;display:flex;gap:13px;flex-wrap:wrap}.modal-tier-hint{margin-top:10px;color:#8fa3bd;font-size:12px;text-transform:none;font-weight:600;text-align:left}
     @media(max-width:1050px){.nav{display:none}.search{width:220px}.ranking-row,.ranking-head{grid-template-columns:130px 1fr}.ranking-head div:last-child,.ranking-row .tiers{grid-column:1/-1;padding:10px 16px 22px}.columns{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;padding-bottom:8px;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}.tier-column{flex:0 0 min(82vw,320px);scroll-snap-align:start}}
-    @media(max-width:600px){.tier-column{flex:0 0 62vw}.columns{scroll-padding-left:0;padding-right:28vw}}
+    @media(max-width:600px){.tier-column{flex:0 0 62vw}.columns{scroll-padding-left:0;padding-right:28vw}.account-badge{font-size:10px;padding:5px 10px}}
   
     .info-btn{height:42px;border:1px solid #314660;border-radius:12px;background:#1d2b40;color:#f4f8ff;font-weight:950;font-size:15px;padding:0 17px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 10px 26px rgba(0,0,0,.22)}
     .info-btn:hover{background:#263752;border-color:#4b6689;transform:translateY(-1px)}
@@ -590,7 +593,7 @@
     </div>
   </div>
 
-  <div id="modalBackdrop" class="modal-backdrop"><div class="modal"><button class="close" onclick="closeModal()">×</button><img id="modalAvatar" class="avatar" src="" alt="" /><h2 id="modalName"></h2><div id="modalRank" class="rank-pill"></div><a id="modalNameMC" class="name-mc" href="#" target="_blank" rel="noopener">▣ NameMC ↗</a><div class="modal-section">Pozisyon</div><div class="position-box"><div id="modalPosition" class="pos-num"></div><div id="modalOverall" class="pos-text"></div></div><div class="modal-section">Tierler</div><div id="modalTiers" class="modal-tiers"></div><div class="modal-tier-hint">İmlecinizi tier ikonunun üzerine getirerek Aktif Tier ve Zirve Tier bilgisini görebilirsiniz.</div></div></div>
+  <div id="modalBackdrop" class="modal-backdrop"><div class="modal"><button class="close" onclick="closeModal()">×</button><img id="modalAvatar" class="avatar" src="" alt="" /><h2 id="modalName"></h2><div id="modalAccount" class="account-badge"></div><br><div id="modalRank" class="rank-pill"></div><a id="modalNameMC" class="name-mc" href="#" target="_blank" rel="noopener">▣ NameMC ↗</a><div class="modal-section">Pozisyon</div><div class="position-box"><div id="modalPosition" class="pos-num"></div><div id="modalOverall" class="pos-text"></div></div><div class="modal-section">Tierler</div><div id="modalTiers" class="modal-tiers"></div><div class="modal-tier-hint">İmlecinizi tier ikonunun üzerine getirerek Aktif Tier ve Zirve Tier bilgisini görebilirsiniz.</div></div></div>
   <script>
     const TIER_POINTS={HT1:60,LT1:45,HT2:30,LT2:20,HT3:10,LT3:6,HT4:4,LT4:3,HT5:2,LT5:1};
     const TIER_ORDER=['HT1','LT1','HT2','LT2','HT3','LT3','HT4','LT4','HT5','LT5'];
@@ -715,7 +718,7 @@
     function rankTitle(points){return getAchievement(points).name}
     function rankLabel(points){return rankTitle(points)+' ('+points+' puan)'}
     function achievementLine(points){const a=getAchievement(points);return `<div class="achievement-line"><span class="achievement-icon">${achievementIcon(points)}</span><span>${a.name}</span> <span class="achievement-points">(${points} puan)</span></div>`}
-    function premiumText(p){return p.premium?'Premium':'Premium değil'}
+    function premiumText(p){return p.premium?'Premium':'Cracked'}
     function kitIcon(id){return kits.find(k=>k.id===id)?.icon||''}
     function visibleTier(t){
       if(!t||!t.current)return'';
@@ -875,7 +878,7 @@
       `).join('');
     }
     function setActive(tab){activeTab=tab;renderTabs(tab);if(tab==='overall'){overallView.style.display='';kitView.style.display='none';renderOverall()}else{overallView.style.display='none';kitView.style.display='';renderKit(tab)}}
-    function openModal(ign){const sorted=[...players].sort((a,b)=>pointsFor(b)-pointsFor(a)),p=players.find(x=>x.ign.toLowerCase()===ign.toLowerCase());if(!p)return;const pts=pointsFor(p),pos=sorted.findIndex(x=>x.ign===p.ign)+1;modalAvatar.src=p.skin||skinUrl(p.ign);modalName.textContent=p.ign;const ach=getAchievement(pts);modalRank.className=`rank-pill title-pill ${ach.cls}`;modalRank.innerHTML=`${achievementIcon(pts)} ${ach.name}`;modalNameMC.href=nameMCUrl(p.ign);modalPosition.textContent=`${pos}.`;modalOverall.innerHTML=`🏆 OVERALL <span>(${pts} puan)</span>`;modalTiers.innerHTML=orderedTierChips(p);modalBackdrop.classList.add('open')}
+    function openModal(ign){const sorted=[...players].sort((a,b)=>pointsFor(b)-pointsFor(a)),p=players.find(x=>x.ign.toLowerCase()===ign.toLowerCase());if(!p)return;const pts=pointsFor(p),pos=sorted.findIndex(x=>x.ign===p.ign)+1;modalAvatar.src=p.skin||skinUrl(p.ign);modalName.textContent=p.ign;modalAccount.textContent=premiumText(p);modalAccount.className=`account-badge ${p.premium?'premium':'cracked'}`;const ach=getAchievement(pts);modalRank.className=`rank-pill title-pill ${ach.cls}`;modalRank.innerHTML=`${achievementIcon(pts)} ${ach.name}`;modalNameMC.href=nameMCUrl(p.ign);modalPosition.textContent=`${pos}.`;modalOverall.innerHTML=`🏆 OVERALL <span>(${pts} puan)</span>`;modalTiers.innerHTML=orderedTierChips(p);modalBackdrop.classList.add('open')}
     function closeModal(){modalBackdrop.classList.remove('open')}
     infoBackdrop.addEventListener('click',e=>{if(e.target.id==='infoBackdrop')closeInfoPanel()});
     modalBackdrop.addEventListener('click',e=>{if(e.target.id==='modalBackdrop')closeModal()});
